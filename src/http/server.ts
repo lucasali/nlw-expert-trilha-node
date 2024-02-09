@@ -1,16 +1,19 @@
+import cookie from "@fastify/cookie";
 import fastify from "fastify";
+import { createPoll } from "../routes/create-poll";
+import { getPoll } from "../routes/get-poll";
+import { voteOnPoll } from "../routes/vote-on-poll";
 
 const app = fastify();
 
-app.post("/polls", (request) => {
-  console.log(request.body);
-
-  return "Hello NLW";
+app.register(cookie, {
+  secret: "polls-app-nlw",
+  hook: "onRequest",
 });
 
-app.get("/polls/:id", () => {});
-
-app.post("/polls/:id/votes", () => {});
+app.register(createPoll);
+app.register(getPoll);
+app.register(voteOnPoll);
 
 app
   .listen({
