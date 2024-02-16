@@ -1,4 +1,5 @@
 import cookie from "@fastify/cookie";
+import cors from "@fastify/cors";
 import ws from "@fastify/websocket";
 import fastify from "fastify";
 import { createPoll } from "./routes/create-poll";
@@ -14,6 +15,10 @@ app.register(cookie, {
 });
 
 app.register(ws);
+
+app.register(cors, {
+  origin: "http://localhost:3000",
+});
 
 app.register(createPoll);
 app.register(getPoll);
